@@ -70,7 +70,15 @@ public class EstimateService {
      * @return 概算見積もり結果の料金
      */
     public Integer getPrice(UserOrderDto dto) {
-        double distance = estimateDAO.getDistance(dto.getOldPrefectureId(), dto.getNewPrefectureId());
+        /* 料金計算のロジック（修正） */
+        double distance = 0.0;
+        if (dto.getOldPrefectureId().equals(dto.getNewPrefectureId())){
+            distance = 30.0;
+        }
+        else{
+            distance = estimateDAO.getDistance(dto.getOldPrefectureId(), dto.getNewPrefectureId());
+        }
+        
         // 小数点以下を切り捨てる
         int distanceInt = (int) Math.floor(distance);
 
@@ -83,6 +91,7 @@ public class EstimateService {
                 + getBoxForPackage(dto.getWashingMachine(), PackageType.WASHING_MACHINE);
 
         // 箱に応じてトラックの種類が変わり、それに応じて料金が変わるためトラック料金を算出する。
+        //ここにif boxes > 200でよいか
         int pricePerTruck = estimateDAO.getPricePerTruck(boxes);
 
         // オプションサービスの料金を算出する。
