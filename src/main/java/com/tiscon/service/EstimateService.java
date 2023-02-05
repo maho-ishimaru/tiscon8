@@ -13,6 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 /**
  * 引越し見積もり機能において業務処理を担当するクラス。
@@ -70,7 +72,15 @@ public class EstimateService {
      * @return 概算見積もり結果の料金
      */
     public Integer getPrice(UserOrderDto dto) {
-        double distance = estimateDAO.getDistance(dto.getOldPrefectureId(), dto.getNewPrefectureId());
+        /* 料金計算のロジック（修正） */
+        double distance = 0.0;
+        if (dto.getOldPrefectureId().equals(dto.getNewPrefectureId())){
+            distance = 30.0;
+        }
+        else{
+            distance = estimateDAO.getDistance(dto.getOldPrefectureId(), dto.getNewPrefectureId());
+        }
+        
         // 小数点以下を切り捨てる
         int distanceInt = (int) Math.floor(distance);
 
@@ -83,6 +93,10 @@ public class EstimateService {
                 + getBoxForPackage(dto.getWashingMachine(), PackageType.WASHING_MACHINE);
 
         // 箱に応じてトラックの種類が変わり、それに応じて料金が変わるためトラック料金を算出する。
+        if (boxes > 200){
+            return -1;
+        }
+
         int pricePerTruck = estimateDAO.getPricePerTruck(boxes);
 
         // オプションサービスの料金を算出する。
@@ -92,7 +106,28 @@ public class EstimateService {
             priceForOptionalService = estimateDAO.getPricePerOptionalService(OptionalServiceType.WASHING_MACHINE.getCode());
         }
 
-        return priceForDistance + pricePerTruck + priceForOptionalService;
+        //お届け月定数 N, setでdelivery_dayが登録されてないからエラー
+        String yyyy_mm_dd = dto.getDelivery_day();
+        LocalDate localDate = LocalDate.parse(yyyy_mm_dd, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+
+        int month = localDate.getMonthValue();
+        double N;
+        switch(month){
+            case 3:
+                N = 1.5;
+                break;
+            case 4:
+                N = 1.5;
+                break;
+            case 9:
+                N = 1.2;
+                break;
+            default:
+                N = 1.0;
+                break;
+        }
+
+        return (int) Math.floor((priceForDistance + pricePerTruck + priceForOptionalService)*N);
     }
 
     /**

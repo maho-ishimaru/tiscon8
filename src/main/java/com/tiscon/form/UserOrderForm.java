@@ -25,6 +25,9 @@ public class UserOrderForm {
     private String email;
 
     @NotBlank
+    private String delivery_day;
+
+    @NotBlank
     private String oldPrefectureId;
 
     @NotBlank
@@ -79,6 +82,14 @@ public class UserOrderForm {
         this.email = email;
     }
 
+    public String getDelivery_day() {
+        return delivery_day;
+    }
+
+    public void setDelivery_day(String delivery_day) {
+        this.delivery_day = delivery_day;
+    }
+    
     public String getOldPrefectureId() {
         return oldPrefectureId;
     }

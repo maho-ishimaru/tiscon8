@@ -8,6 +8,8 @@ public class UserOrderDto {
 
     private String email;
 
+    private String delivery_day;
+
     private String oldPrefectureId;
 
     private String oldAddress;
@@ -44,6 +46,14 @@ public class UserOrderDto {
 
     public String getEmail() {
         return email;
+    }
+
+    public String getDelivery_day() {
+        return delivery_day;
+    }
+
+    public void setDelivery_day(String delivery_day) {
+        this.delivery_day = delivery_day;
     }
 
     public void setEmail(String email) {

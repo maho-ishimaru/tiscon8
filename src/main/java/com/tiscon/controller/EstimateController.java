@@ -49,7 +49,11 @@ public class EstimateController {
     @GetMapping("input")
     String input(Model model) {
         if (!model.containsAttribute("userOrderForm")) {
-            model.addAttribute("userOrderForm", new UserOrderForm());
+            UserOrderForm form =  new UserOrderForm();
+            form.setBed("0");
+            form.setBicycle("0");
+            form.setWashingMachine("0");
+            model.addAttribute("userOrderForm", form);
         }
 
         model.addAttribute("prefectures", estimateDAO.getAllPrefectures());
@@ -62,7 +66,7 @@ public class EstimateController {
      * @param model 遷移先に連携するデータ
      * @return 遷移先
      */
-    @PostMapping(value = "submit", params = "backToTop")
+    @PostMapping(value = {"submit","order"}, params = "backToTop")
     String backToTop(Model model) {
         return "top";
     }
@@ -96,19 +100,6 @@ public class EstimateController {
         return "input";
     }
 
-    /**
-     * 確認画面に戻る。
-     *
-     * @param userOrderForm 顧客が入力した見積もり依頼情報
-     * @param model         遷移先に連携するデータ
-     * @return 遷移先
-     */
-    @PostMapping(value = "order", params = "backToConfirm")
-    String backToConfirm(UserOrderForm userOrderForm, Model model) {
-        model.addAttribute("prefectures", estimateDAO.getAllPrefectures());
-        model.addAttribute("userOrderForm", userOrderForm);
-        return "confirm";
-    }
 
     /**
      * 概算見積もり画面に遷移する。
@@ -121,7 +112,6 @@ public class EstimateController {
     @PostMapping(value = "result", params = "calculation")
     String calculation(@Validated UserOrderForm userOrderForm, BindingResult result, Model model) {
         if (result.hasErrors()) {
-
             model.addAttribute("prefectures", estimateDAO.getAllPrefectures());
             model.addAttribute("userOrderForm", userOrderForm);
             return "confirm";
@@ -135,6 +125,11 @@ public class EstimateController {
         model.addAttribute("prefectures", estimateDAO.getAllPrefectures());
         model.addAttribute("userOrderForm", userOrderForm);
         model.addAttribute("price", price);
+
+        if (price.equals((-1))){
+            return "result_error";
+        }
+        
         return "result";
     }
 

@@ -42,7 +42,16 @@
           <label for="email">連絡先メールアドレス</label>
           <input type="text" id="email" name="email" th:field="*{email}" class="form-control" value="test@test.com"/>
         </div>
-        <div class="sub-title">集荷元・お届け先</div>
+        <div class="sub-title">お届け日・集荷元・お届け先</div>
+        
+        <!--  -->
+        <div class="form-group">
+          <label for="delivery_day">お届け日</label>
+          <input type="date" id="delivery_day" name="delivery_day" th:field="*{delivery_day}"
+                 class="form-control" value="2023-02-04"/>
+        </div>
+        
+        
         <div class="form-group">
           <label for="oldPrefectureId">集荷元住所（都道府県）</label>
           <select id="oldPrefectureId" name="oldPrefectureId" class="form-control">
@@ -72,25 +81,39 @@
           <label for="box">段ボールの個数</label>
           <input type="text" id="box" name="box" th:field="*{box}" class="form-control" value="10"/>
         </div>
+
         <div class="form-group">
           <label for="bed">ベッドの個数</label>
-          <input type="text" id="bed" name="bed" th:field="*{bed}" class="form-control" value="3"/>
+          <div class="spinner_area" id="bed" name="bed" th:field="*{bed}">
+            <input type="number" value="0" class="counter1" data-max="10" data-min="0" th:field="*{bed}" >
+            <input type="button" value="＋" class="btnspinner" data-cal="1" data-target=".counter1">
+            <input type="button" value="－" class="btnspinner" data-cal="-1" data-target=".counter1">
+          </div> 
         </div>
+        
         <div class="form-group">
           <label for="bicycle">自転車の個数</label>
-          <input type="text" id="bicycle" name="bicycle" th:field="*{bicycle}" class="form-control" value="1"/>
+          <div class="spinner_area" id="bicycle" name="bicycle">
+            <input type="number" th:value="0" class="counter2" data-max="10" data-min="0" th:field="*{bicycle}">
+            <input type="button" th:value="＋" class="btnspinner" data-cal="1" data-target=".counter2">
+            <input type="button" th:value="－" class="btnspinner" data-cal="-1" data-target=".counter2">
+          </div> 
         </div>
         <div class="form-group">
           <label for="washingMachine">洗濯機の個数</label>
-          <input type="text" id="washingMachine" name="washingMachine" th:field="*{washingMachine}" class="form-control"
-                 value="1"/>
+  
+          <div class="spinner_area" id="washingMachine" name="washingMachine">
+            <input type="number" th:value="0" class="counter3" data-max="10" data-min="0" th:field="*{washingMachine}">
+            <input type="button" th:value="＋" class="btnspinner" data-cal="1" data-target=".counter3">
+            <input type="button" th:value="－" class="btnspinner" data-cal="-1" data-target=".counter3">
+          </div> 
         </div>
         <div class="form-group">
           <label for="washingMachineInstallation">洗濯機の設置工事申し込み</label>
-          <select id="washingMachineInstallation" name="washingMachineInstallation" class="form-control" th:field="*{washingMachineInstallation}">
-            <option th:value="false" th:text="なし">なし</option>
-            <option th:value="true" th:text="あり">あり</option>
-          </select>
+          <div id="washingMachineInstallation" th:field="*{washingMachineInstallation}">
+            <input type="radio" th:value="true" th:text="あり" name="washingMachineInstallation">　　
+            <input type="radio" th:value="false" th:text="なし" name="washingMachineInstallation">
+          </div>
         </div>
       </fieldset>
       <div class="form-group">
