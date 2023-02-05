@@ -106,10 +106,10 @@
         </div>
         <div class="form-group">
           <label for="washingMachineInstallation">洗濯機の設置工事申し込み</label>
-          <select id="washingMachineInstallation" name="washingMachineInstallation" class="form-control" th:field="*{washingMachineInstallation}">
-            <option th:value="false" th:text="なし">なし</option>
-            <option th:value="true" th:text="あり">あり</option>
-          </select>
+          <div id="washingMachineInstallation" th:field="*{washingMachineInstallation}">
+            <input type="radio" th:value="true" th:text="あり" name="washingMachineInstallation">　　
+            <input type="radio" th:value="false" th:text="なし" name="washingMachineInstallation">
+          </div>
         </div>
       </fieldset>
       <div class="form-group">
