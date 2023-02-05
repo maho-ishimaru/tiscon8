@@ -38,7 +38,16 @@
           <label for="email">連絡先メールアドレス</label>
           <input type="text" id="email" name="email" th:field="*{email}" class="form-control" value="test@test.com"/>
         </div>
-        <div class="sub-title">集荷元・お届け先</div>
+        <div class="sub-title">お届け日・集荷元・お届け先</div>
+        
+        <!--  -->
+        <div class="form-group">
+          <label for="delivery_day">お届け日</label>
+          <input type="date" id="delivery_day" name="delivery_day" th:field="*{delivery_day}"
+                 class="form-control" value="2023-02-04"/>
+        </div>
+        
+        
         <div class="form-group">
           <label for="oldPrefectureId">集荷元住所（都道府県）</label>
           <select id="oldPrefectureId" name="oldPrefectureId" class="form-control">

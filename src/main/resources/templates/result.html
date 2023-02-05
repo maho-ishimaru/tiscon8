@@ -50,6 +50,16 @@
         <col span="1" style="background-color: #FFFFFF;">
         <col span="2" style="background-color: #FFFFFF;">
         <tbody>
+
+        <!-- 追加-->
+        <tr>
+          <th style="width: 40%">お届け日</th>
+          <td>
+            <span th:text="*{delivery_day}" />
+          </td>
+          <input type="hidden" name="delivery_day" id="delivery_day" th:value="*{delivery_day}"/>
+        </tr>
+        
         <tr>
           <th style="width: 40%">転居元住所（都道府県）</th>
           <td>

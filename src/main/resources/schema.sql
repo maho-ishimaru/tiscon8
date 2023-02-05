@@ -11,6 +11,7 @@ CREATE TABLE IF NOT EXISTS CUSTOMER
     OLD_PREFECTURE_ID               CHAR(2) NOT NULL,
     NEW_PREFECTURE_ID               CHAR(2) NOT NULL,
     CUSTOMER_NAME                   VARCHAR(60) NOT NULL,
+    DELIVERY_DAY                    VARCHAR(10) NOT NULL,
     TEL                             VARCHAR(11) NOT NULL,
     EMAIL                           VARCHAR(256) NOT NULL,
     OLD_ADDRESS                     VARCHAR(200) NOT NULL,
