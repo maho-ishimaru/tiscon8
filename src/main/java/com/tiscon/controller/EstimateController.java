@@ -66,7 +66,7 @@ public class EstimateController {
      * @param model 遷移先に連携するデータ
      * @return 遷移先
      */
-    @PostMapping(value = "submit", params = "backToTop")
+    @PostMapping(value = {"submit","order"}, params = "backToTop")
     String backToTop(Model model) {
         return "top";
     }
@@ -100,19 +100,6 @@ public class EstimateController {
         return "input";
     }
 
-    /**
-     * 確認画面に戻る。
-     *
-     * @param userOrderForm 顧客が入力した見積もり依頼情報
-     * @param model         遷移先に連携するデータ
-     * @return 遷移先
-     */
-    @PostMapping(value = "order", params = "backToConfirm")
-    String backToConfirm(UserOrderForm userOrderForm, Model model) {
-        model.addAttribute("prefectures", estimateDAO.getAllPrefectures());
-        model.addAttribute("userOrderForm", userOrderForm);
-        return "confirm";
-    }
 
     /**
      * 概算見積もり画面に遷移する。
